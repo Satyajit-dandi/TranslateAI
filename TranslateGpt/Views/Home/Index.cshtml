@@ -1,0 +1,35 @@
+﻿@*@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+*@
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form method="post" action="@Url.Action("GetGPTResponse")">
+                <div class="form-control">
+                    <textarea class="form-control" name="query" id="query" placeholder="Enter Your Text" rows="4"></textarea>
+                </div>
+
+                <div action="form-group">
+                    <label class="" for="selectedlanguage">Select Language :</label>
+                    <select name="selectedlanguage" id="selectedlanguage" class="form-control">
+                        @foreach(var languages in ViewBag.languages)
+                        {
+                            <option value="@languages.Text">@languages.Text</option>
+                        }
+                    </select>
+                </div>
+
+                <br />
+                
+                <button type="submit" class="btn btn-success">Translate</button>
+            </form>
+        </div>
+    </div>
+</div>
