@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Text;
+using System.Text.Json.Serialization;
+using TranslateGpt.DTOs;
 using TranslateGpt.Models;
 
 namespace TranslateGpt.Controllers
@@ -70,13 +74,34 @@ namespace TranslateGpt.Controllers
             // get the OpenAPIKey from appsettings.json
             var openAPIKey = _configuration["OpenAI:ApiKey"];
             //set up the httpclient with open ai
-            _httpClient.DefaultRequestHeaders.Add("Authorization", $"{openAPIKey}");
+            _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {openAPIKey}");
             //define the reuqest pauload 
+            var paylaod = new
+            {
+                model = "gpt-3.5-turbo",
+                messages = new object[]
+                {
+                    new {role ="system", content=$"Translate the text to {selectedlanguage}"},
+                    new {role = "user" , content=query}
+                },
+                temperature = 0,
+                max_tokens = 256   
+            };
 
+            string jsonPayLoad = JsonConvert.SerializeObject(paylaod);   
+
+            HttpContent httpContent = new StringContent(jsonPayLoad, Encoding.UTF8,"application/json");
             // send the request
 
+            var responsemessage = await _httpClient.PostAsync("https://api.openai.com/v1/chat/completions",httpContent);
+
+            var responseMessageJson  = await  responsemessage.Content.ReadAsStringAsync();
+
             // get response
-            return Ok();
+            var response = JsonConvert.DeserializeObject<OpenAIResponse>(responseMessageJson);
+            ViewBag.Result = response.Choices[0].Message.content;
+            ViewBag.Languages = new SelectList(mostLanguages);
+            return View("Index");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
