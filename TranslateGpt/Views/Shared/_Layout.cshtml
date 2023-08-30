@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -12,19 +16,16 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TranslateGpt</a>
+                <a class="navbar-brand" id="typing-text" asp-area="" asp-controller="Home" asp-action="Index">TGT-Ai</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-braces-asterisk" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M1.114 8.063V7.9c1.005-.102 1.497-.615 1.497-1.6V4.503c0-1.094.39-1.538 1.354-1.538h.273V2h-.376C2.25 2 1.49 2.759 1.49 4.352v1.524c0 1.094-.376 1.456-1.49 1.456v1.299c1.114 0 1.49.362 1.49 1.456v1.524c0 1.593.759 2.352 2.372 2.352h.376v-.964h-.273c-.964 0-1.354-.444-1.354-1.538V9.663c0-.984-.492-1.497-1.497-1.6ZM14.886 7.9v.164c-1.005.103-1.497.616-1.497 1.6v1.798c0 1.094-.39 1.538-1.354 1.538h-.273v.964h.376c1.613 0 2.372-.759 2.372-2.352v-1.524c0-1.094.376-1.456 1.49-1.456v-1.3c-1.114 0-1.49-.362-1.49-1.456V4.352C14.51 2.759 13.75 2 12.138 2h-.376v.964h.273c.964 0 1.354.444 1.354 1.538V6.3c0 .984.492 1.497 1.497 1.6ZM7.5 11.5V9.207l-1.621 1.621-.707-.707L6.792 8.5H4.5v-1h2.293L5.172 5.879l.707-.707L7.5 6.792V4.5h1v2.293l1.621-1.621.707.707L9.208 7.5H11.5v1H9.207l1.621 1.621-.707.707L8.5 9.208V11.5h-1Z" />
+                        </svg>
                     </ul>
                 </div>
             </div>
@@ -38,12 +39,68 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2023 - TranslateGpt - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2023 - Satyajit Dandi | 
+            <button id="redirectLinkedin" class="mx-2 text-dark bg-transparent border border-0">
+                <img src="~/images/linkedin.svg" />
+            </button>
+            <button id="redirectInstagram" class="mx-2 text-dark bg-transparent border border-0">
+                <img src="~/images/instagram.svg" />
+            </button>
+            <button id ="redirectGit" class="mx-2 text-dark bg-transparent border border-0">
+                <img src="~/images/git.svg" />
+            </button>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const typingText = document.getElementById("typing-text");
+            const newText = "Text Generative Translation AI";
+
+            setTimeout(function () {
+                typingText.textContent = newText;
+            }, 3000); // Adjust the delay based on your animation duration
+        });
+            
+        document.getElementById("redirectInstagram").addEventListener("click",redirect);
+
+        document.getElementById("redirectGit").addEventListener("click",redirect2)
+
+        document.getElementById("redirectLinkedin").addEventListener("click",redirect3)
+
+        function redirect(){
+            window.open("https://instagram.com/devvvmanus?utm_source=qr&igshid=MzNlNGNkZWQ4Mg==","_blank");
+        }
+
+        function redirect2(){
+            window.open("https://github.com/Satyajit-dandi","_blank")
+        }
+
+        function redirect3() {
+            window.open("https://www.linkedin.com/in/satyajit-dandi-ab2b22197/","_blank");
+        }
+    </script>
+
+    <style>
+        #typing-text{
+            font-family: monospace;
+            white-space: nowrap;
+            overflow: hidden;
+            animation: typing 3s steps(40, end);
+        }
+
+        @@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width:  20%; /* Length of the final text */
+  }
+}
+
+    </style>
 </body>
 </html>
